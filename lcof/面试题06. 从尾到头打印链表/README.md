@@ -33,6 +33,48 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```kotlin
+/**
+ * 其实就分递归和非递归
+ * 递归版本
+ * 执行用时：244 ms, 在所有 Kotlin 提交中击败了 11.29% 的用户
+ * 内存消耗：36.4 MB, 在所有 Kotlin 提交中击败了 27.42% 的用户
+ */
+class Solution {
+    fun reversePrint(head: ListNode?): IntArray {
+        val list = mutableListOf<Int>()
+        recursion(head, list)
+        return list.toIntArray()
+    }
+}
+
+fun recursion(node: ListNode?, list: MutableList<Int>) {
+    if (node == null)
+        return
+    recursion(node.next, list)
+    list += node.`val`
+}
+
+/**
+ * 非递归，用 Stack 作为辅助的数据结构
+ * 执行用时：204 ms, 在所有 Kotlin 提交中击败了 27.42% 的用户
+ * 内存消耗：36 MB, 在所有 Kotlin 提交中击败了 51.61% 的用户
+ */
+class Solution {
+    fun reversePrint(head: ListNode?): IntArray {
+        val stack: Deque<Int> = LinkedList()
+        var node = head
+        while (node != null) {
+            stack.push(node.`val`)
+            node = node.next
+        }
+        return stack.toIntArray()
+    }
+}
+```
+
 ### **Python3**
 
 ```python

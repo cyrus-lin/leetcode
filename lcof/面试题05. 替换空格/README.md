@@ -33,6 +33,36 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```kotlin
+/**
+ * 使用 API
+ * 执行用时：232 ms, 在所有 Kotlin 提交中击败了 6.25% 的用户
+ * 内存消耗：35.7 MB, 在所有 Kotlin 提交中击败了 20.31% 的用户
+ */
+class Solution {
+    fun replaceSpace(s: String): String {
+        return s.replace(" ", "%20")
+    }
+}
+
+/**
+ * 简单遍历
+ * 执行用时：196 ms, 在所有 Kotlin 提交中击败了 12.50% 的用户
+ * 内存消耗：32.5 MB, 在所有 Kotlin 提交中击败了 93.75% 的用户
+ */
+class Solution {
+    fun replaceSpace(s: String): String {
+        val builder = StringBuilder(3 * s.length)
+        s.forEach {
+            builder.append(if (it == ' ') "%20" else it)
+        }
+        return builder.toString()
+    }
+}
+```
+
 ### **Python3**
 
 ```python

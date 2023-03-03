@@ -42,6 +42,56 @@
 
 <!-- tabs:start -->
 
+### **cyrus**
+
+```kotlin
+/**
+ * 哈希表
+ * 执行用时：324 ms, 在所有 Kotlin 提交中击败了 51.19% 的用户
+ * 内存消耗：52.2 MB, 在所有 Kotlin 提交中击败了 64.28% 的用户
+ */
+class Solution {
+    fun findRepeatNumber(nums: IntArray): Int {
+        val map = mutableMapOf<Int, Int>()
+        nums.forEach {
+            if (map.putIfAbsent(it, it) != null)
+                return it
+        }
+        return -1
+    }
+}
+
+/**
+ * 原地交换
+ * 如果没有重复那么这就是索引呀，可以整理为 nums[index] == index
+ * 从左到右整理，如果不符合 nums[index] == index 则交换 nums[index] 和 nums[nums[index]]
+ *
+ * 执行用时：284 ms, 在所有 Kotlin 提交中击败了 98.77% 的用户
+ * 内存消耗：52 MB, 在所有 Kotlin 提交中击败了 71.60% 的用户
+ */
+class Solution {
+    fun findRepeatNumber(nums: IntArray): Int {
+        val n = nums.size
+        var i = 0
+        while (i < n) {
+            while (nums[i] != i) {
+                if (nums[i] == nums[nums[i]])
+                    return nums[i]
+                nums.swap(i)
+            }
+            i++
+        }
+        return -1
+    }
+}
+
+fun IntArray.swap(index: Int) {
+    val temp = get(index)
+    set(index, get(temp))
+    set(temp, temp)
+}
+```
+
 ### **Python3**
 
 ```python
