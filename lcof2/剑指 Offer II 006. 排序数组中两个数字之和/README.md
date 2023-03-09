@@ -58,6 +58,26 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 非常经典的【两数之和 twoSum】
+ * 数组 + 双指针的入门
+ */
+var twoSum = function(numbers, target) {
+    for (let l = 0, r = numbers.length - 1;;) {
+        if (numbers[l] + numbers[r] > target) {
+            r--;
+        } else if (numbers[l] + numbers[r] < target) {
+            l++;
+        } else {
+            return [l, r];
+        }
+    }
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
