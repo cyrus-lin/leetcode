@@ -78,6 +78,38 @@ return sign * cnt
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 理解：除法的本质其实是减法
+ * 返回值加上最大最小限制
+ */ 
+var divide = function (a, b) {
+    if (a == 0 || b == 0) return 0;
+
+    var ret = 0;
+    if (b == 1) {
+        ret = a;
+    } else if (b == -1) {
+        ret = -a;
+    } else {
+        var negative = (a < 0 && b > 0) || (a > 0 && b < 0);
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (a >= b) {
+            a -= b;
+            ret++;
+        }
+        ret = negative ? -ret : ret;
+    }
+
+    var max = Math.pow(2, 31) - 1;
+    var min = -Math.pow(2, 31);
+    return Math.max(Math.min(max, ret), min);
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
