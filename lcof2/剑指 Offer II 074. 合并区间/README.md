@@ -64,6 +64,42 @@ def merge(intervals):
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 目标：合并所有有交集的区间（返回的区间两两不能有交集）
+ * 明确区间合并的三种情况：
+ *   ---- | ---- | ---- 
+ * ----   |  --  |    ----
+ * 
+ * 如果不排序，需要两两对比
+ * 
+ * 对区间的开始位置排序后，将区间集合遍历一次即可，前后两个相邻区间进行合并操作
+ * 相当于将上面的三种情况减少到后两种情况
+ * 如果 i 和 i + 1 不能合并，那么 i 与 i + 2 及之后的区间也不能合并，因为区间的起始位置是升序排序的
+ * 
+ * @param {number[][]} intervals
+ * @return {number[][]}
+ */
+var merge = function(intervals) {
+    if (!intervals || intervals.length < 2) return intervals;
+
+    intervals.sort((l, r) => l[0] - r[0]);
+    var ret = new Array(), cur = intervals[0];
+    for (let i = 1; i < intervals.length; i++) {
+        if (intervals[i][0] > cur[1]) {
+            ret.push(cur);
+            cur = intervals[i];
+            continue;
+        }
+        cur[1] = intervals[i][1] > cur[1] ? intervals[i][1] : cur[1];
+    }
+    ret.push(cur);
+    return ret;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
