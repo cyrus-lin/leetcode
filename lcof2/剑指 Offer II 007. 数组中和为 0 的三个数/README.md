@@ -50,6 +50,43 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 理解：三数之和的本质其实是【两数之和 twoSum】加多一个变量
+ * 两数之和关键点：排序、头尾双指针往中间逼近
+ * 所以这里首先排序，然后固定住 x，那么 y 和 z 其实就是两数之和的算法模板
+ * 注意去重
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var threeSum = function(nums) {
+    var ret = new Array();
+    if (!nums || nums.length < 3) return ret;
+
+    nums.sort((l, r) => l - r);
+    for (let i = 0; i < nums.length - 2;) {
+        for (let j = i + 1, k = nums.length - 1; j < k;) {
+            let sum = nums[i] + nums[j] + nums[k];
+
+            if (sum < 0) {
+                j++;
+            } else if (sum > 0) {
+                k--;
+            } else {
+                ret.push([nums[i], nums[j], nums[k]]);
+                for (let diff = nums[j]; diff == nums[j] && j < k; j++) {}
+                for (let diff = nums[k]; diff == nums[k] && j < k; k--) {}
+            }
+        }
+        for (let diff = nums[i]; diff == nums[i] && i < nums.length - 2; i++) {}
+    }
+
+    return ret;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
