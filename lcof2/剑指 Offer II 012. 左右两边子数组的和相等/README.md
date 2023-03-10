@@ -64,6 +64,32 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 其实这里不是必须用上前缀和
+ * 左子集累加，右子集 = 总和 - 当前位置 - 左子集
+ * @param {number[]} nums
+ * @return {number}
+ */
+var pivotIndex = function(nums) {
+    if (!nums) return -1;
+    var c = 0;
+    for (const num of nums) {
+        c += num;
+    }
+
+    var lc = 0, rc = 0;
+    for (let i = 0; i < nums.length; i++) {
+        lc += (i - 1 >= 0 ? nums[i - 1] : 0);
+        rc = c - nums[i] - lc;
+        if (lc == rc) return i;
+    }
+    return -1;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
