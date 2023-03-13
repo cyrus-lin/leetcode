@@ -4,7 +4,7 @@
 
 <!-- 这里写题目描述 -->
 
-<p>给定一个正整数数组和一个整数&nbsp;<code>k</code><strong> ，</strong>请找到该数组中和为&nbsp;<code>k</code><strong>&nbsp;</strong>的连续子数组的个数。</p>
+<p>给定一个整数数组和一个整数&nbsp;<code>k</code><strong> ，</strong>请找到该数组中和为&nbsp;<code>k</code><strong>&nbsp;</strong>的连续子数组的个数。</p>
 
 <p>&nbsp;</p>
 
@@ -46,6 +46,49 @@
 数组中既有正数又有负数，无法使用双指针。可以利用前缀和思想，快速判断子数组的和
 
 <!-- tabs:start -->
+
+### **Cyrus**
+
+```javascript
+/**
+ * 从某一符合条件的情形里推导出规则：
+ * 既然是连续的子数组，那么它的样子大概是这样的：
+ * |     pre     |  section  | suf |
+ * ---------------------------------
+ *               x           y
+ * 
+ * 假设满足条件（和为 k）的连续区间为 section [x, y]，那么 x 和 y 就会把整个数组切分为三部分：
+ * 1，前缀区间 pre
+ * 2，和为 k 的区间 section
+ * 3，后缀区间 suf
+ * 
+ * 在遍历数组 nums 的过程中，cnt 是已遍历区间 pre + section 的和，将目标区间 section 的 y 固定为当前索引
+ * 那么就是要找到这么一个 x 使得：pre + section = cnt = sum(0, x) + k
+ * cnt 已知（累加），k 已知，那么 pre = cnt - k，问题就转化为要找到和为 cnt - k 的前缀区间，也即前缀和
+ * 而前缀和在遍历数组进行累加操作时已经算出来了，只需要将这些前缀和保存到一个 map 里，方便后续的查找
+ * 
+ * 直观的解法是使用 i 和 j 两个指针双重循环遍历 nums，计算 [i, j] 的和是否为 k
+ * 这种解法相当于固定 section 区间的开始索引 x，计算结束索引 y
+ * 想要设计出上面这种思路，必须颠倒一般思路：固定 section 区间的结束索引 y，计算开始索引 x，因为前缀和是可以复用的
+ * 
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var subarraySum = function(nums, k) {
+    var map = new Map(), cnt = 0, hits = 0, pre = 0;
+    map.set(0, 1);
+    for (const num of nums) {
+        cnt += num;
+        pre = cnt - k;
+        if (map.get(pre)) {
+            hits += map.get(pre);
+        }
+        map.set(cnt, (map.get(cnt) ? map.get(cnt) : 0) + 1);
+    }
+    return hits;
+};
+```
 
 ### **Python3**
 
