@@ -60,6 +60,39 @@
 
 <!-- tabs:start -->
 
+
+### **Cyrus**
+
+```javascript
+/**
+ * 求连续子数组、区间的问题一般可以用：滑动窗口、双指针、前缀和
+ * 
+ * 此问题虽然数组未排序，但其元素都是正整数就保证了：增加窗口 sum 增大，减小窗口 sum 减小
+ * 而滑动窗口的关键操作就是增大/减小窗口
+ * 
+ * 前缀和解法
+ * 指针 j 遍历数组，其作为目标区间的结束标志
+ * 当区间和 sum >= k 时，即存在和 >= k 的一个或多个区间，此时只要二分搜索前缀和数组，找到小于 sum - k 的极大值 pres[i]
+ * [i + 1, j] 就是区间 [0, j] 里满足条件的最短区间
+ * 
+ * @param {number} target
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minSubArrayLen = function(target, nums) {
+    var ret = Number.MAX_VALUE;
+    for (let i = 0, j = 0, sum = 0; j < nums.length; j++) {
+        sum += nums[j];
+        while (sum >= target && i <= j) {
+            ret = Math.min(ret, j - i + 1);
+            sum -= nums[i];
+            i++;
+        }
+    }
+    return ret == Number.MAX_VALUE ? 0 : ret;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
