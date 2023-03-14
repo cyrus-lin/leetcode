@@ -48,6 +48,34 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 遍历，并用哈希表 Map
+ * @param {number[]} nums
+ * @return {number}
+ */
+var singleNumber = function(nums) {
+    const map = new Map();
+    var value;
+    for (const num of nums) {
+        value = map.get(num);
+        if (!value) {
+            map.set(num, 2);
+        } else {
+            value--;
+            if (!value) {
+                map.delete(num);
+            } else {
+                map.set(num, value);
+            }
+        }
+    }
+    return map.keys().next().value;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
