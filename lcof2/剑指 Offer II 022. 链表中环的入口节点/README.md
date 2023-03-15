@@ -83,6 +83,52 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * 剑指 Offer II 022. 链表中环的入口节点
+ * 
+ * 背景知识：快慢指针可以用来判断链表是否有环
+ * 快指针每次两步，慢指针每次一步，同时从链头出发，如果能够相遇则说明有环
+ * 
+ * 那链头节点和环入口节点间有什么关系呢？画图总结规律：
+ *         fast: 1 2 3 4 5 6 7 4 5 6 7 4 5 6 7 4 5 6 7
+ * slow round 1: 1   2   3   4   5
+ * slow round 2:                 1 2 3 4 
+ * 
+ * 
+ * 
+ * 
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var detectCycle = function(head) {
+    var fast = head, slow = head;
+    while (true) {  // 快指针两步，慢指针一步，直到相遇
+        if (!fast || !fast.next) return null;
+        fast = fast.next.next;
+        slow = slow.next;
+        if (fast === slow) break;
+    }
+
+    slow = head;
+    while (true) {  // 慢指针回到链头继续走，直到和快指针相遇
+        if (fast === slow) return fast;
+        fast = fast.next;
+        slow = slow.next;
+    }
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
