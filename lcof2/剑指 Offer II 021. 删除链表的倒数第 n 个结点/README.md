@@ -58,6 +58,49 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+
+/**
+ * 剑指 Offer II 021. 删除链表的倒数第 n 个结点
+ * 
+ * 快慢指针，解决链表没有前向指针导致不能后退只能前进的问题
+ * 设计思路：控制快慢两个指针间的距离，当快指针到达链表尾结点时，使慢指针刚好处于目标节点
+ * 
+ * 用前进步数 step 计数，n 是从 1 开始的，那么快慢指针的间距为 n - 1
+ * 
+ * @param {ListNode} head
+ * @param {number} n
+ * @return {ListNode}
+ */
+var removeNthFromEnd = function(head, n) {
+    if (!head) return head;
+    var fast = head, slow = head, step = 0;
+
+    while (fast.next && step < n) {  // 快指针先走 n - 1 步
+        fast = fast.next;
+        step++;
+    }
+    while (fast.next) {  // 然后快慢指针同时前进
+        fast = fast.next;
+        slow = slow.next;
+    }
+
+    if (step == 0) return null;  // special case: 只有一个元素
+    if (step + 1 == n) return head.next;  // special case: 移除倒数第 len(head) 个元素，即移除链表头
+    slow.next = slow.next.next;
+    return head;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
