@@ -52,6 +52,41 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * 剑指 Offer II 027. 回文链表
+ * 
+ * 1，遍历链表，将链表拷贝到数组，通过双指针头尾逼近判断是否回文
+ * 2，遍历链表并入栈，依次出栈对比，通过先进后出的特性翻转链表
+ * 
+ * 比较有挑战性的是不使用额外的数据结构/空间：
+ * 1，递归，通过调用栈反向迭代节点，同时使用递归函数外的变量向前迭代
+ * 
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function(head) {
+    var cur = head, tmp = false;
+    function recursion(node) {
+        if (!node) return true;
+        if (!recursion(node.next)) return false;
+        tmp = node.val == cur.val;
+        cur = cur.next;
+        return tmp;
+    };
+    return recursion(head);
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
