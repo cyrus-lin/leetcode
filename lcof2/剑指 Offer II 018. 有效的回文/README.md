@@ -43,6 +43,60 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 剑指 Offer II 018. 有效的回文
+ * 
+ * 字符串是字符的数组，判断回文就用头尾双指针
+ * 
+ * 一些额外的规则：跳过 [0-9a-zA-Z] 和忽略大小写
+ * 可以用 ASCII 码转换为数学计算比较快
+ * 
+ * 执行结果：通过 显示详情 你的代码真是无敌了！
+ * 执行用时：52 ms, 在所有 JavaScript 提交中击败了 100.00% 的用户
+ * 内存消耗：41.8 MB, 在所有 JavaScript 提交中击败了 98.56% 的用户
+ * 
+ * ASCII:
+ * 0: 48, 9: 57
+ * a: 97, z: 122
+ * A: 65, Z: 90 
+ * 
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function(s) {
+    if (!s) return false;
+    var isNumber = function(code) {
+        return code >= 48 && code <= 57;
+    }
+    var isValid = function(code) {
+        return isNumber(code) || (code >= 97 && code <= 122) || (code >= 65 && code <= 90); 
+    }
+    for (let l = 0, r = s.length - 1, lc = 0, rc = 0; l < r;) {
+        lc = s.codePointAt(l);
+        rc = s.codePointAt(r);
+        
+        if (!isValid(lc)) {
+            l++;
+            continue;
+        }
+        if (!isValid(rc)) {
+            r--;
+            continue;
+        }
+        if ((lc == rc) || (!isNumber(lc) && !isNumber(rc) && Math.abs(lc - rc) == 32)) {
+            l++;
+            r--;
+            continue;
+        }
+        return false;
+    }
+    return true;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
