@@ -69,6 +69,95 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 剑指 Offer II 095. 最长公共子序列
+ * 
+ * 动态规划的典型例题，可以作为一个模板，通过这道题了解动态规划的流程个概念
+ * 
+ * 1）定义 dp 数组
+ * 
+ * dp 是个二维数组，dp[i][j] 表示 text1 长度为 i 的前缀，和 text2 长度为 j 的前缀，的最长公共子序列
+ * 所以 max(i) = text1.length + 1
+ * 
+ * 2）状态转移方程
+ * 
+ * 考虑如何计算任一格子的值 dp[i][j]
+ * dp[i - 1][j - 1]、dp[i - 1][j] 和 dp[i][j - 1] 是已知的，我们需要找出规律（状态转移方程），通过它们计算出 dp[i][j]
+ * 对于 text1[i - 1] 和 text2[j - 1]，如果它们相等，那么相当于使 text1[i - 2] 和 text2[j - 2] 的最长公共子序列 + 1，即 dp[i - 1][j - 1] + 1
+ * 如果不相等则不能使 dp[i - 1][j - 1] 增长，此时应该取 dp[i][j - 1] 和 dp[i - 1][j] 的最大值
+ * 如果 i == 0 or j == 0 表示空前缀，取 0
+ * 
+ * 
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+var longestCommonSubsequence = function(text1, text2) {
+    if (!text1 || !text2) return 0;
+
+    var m = text1.length + 1, n = text2.length + 1;
+    var dp = new Array(m);
+    for (let i = 0; i < dp.length; i++) {
+        dp[i] = new Array(n);
+    }
+
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (i == 0 || j == 0) {
+                dp[i][j] = 0;
+                continue;
+            }
+
+            if (text1[i - 1] == text2[j - 1]) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+                continue;
+            }
+
+            dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+        }
+    }
+    return dp[m - 1][n - 1];
+};
+
+/**
+ * 3）压缩 dp 数组
+ * 
+ * 考虑到每次计算 dp[i][j] 只需用到当前行和上一行，那么可以用两行替代二维数组 dp
+ * 
+ * 每次计算 Math.max(左边, 上边) 时，左边就是 dp[j - 1]，上边就是 dp[j]
+ * 
+ * 但计算【左上 + 1】时就有问题了，此时【左上】已经被【左】覆盖了，所以需要用 prev 保留上一行 
+ * 
+ * @param {string} text1
+ * @param {string} text2
+ * @return {number}
+ */
+var longestCommonSubsequence = function(text1, text2) {
+    if (!text1 || !text2) return 0;
+
+    var m = text1.length + 1, n = text2.length + 1;
+    var dp = new Array(n);
+
+    for (let i = 0, prev; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (i == 0 || j == 0) {
+                dp[j] = 0;
+            } else if (text1[i - 1] == text2[j - 1]) {
+                dp[j] = prev[j - 1] + 1;
+            } else {
+                dp[j] = Math.max(dp[j], dp[j - 1]);
+            }
+            tmp = dp[j];
+        }
+        prev = Array.from(dp);
+    }
+    return dp[n - 1];
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
