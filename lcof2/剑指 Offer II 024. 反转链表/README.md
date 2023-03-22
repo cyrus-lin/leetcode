@@ -60,6 +60,34 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * 剑指 Offer II 024. 反转链表
+ * 
+ * 递归的典型例题，利用方法调用栈作为数据结构的栈保存节点
+ * 
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+var reverseList = function(head) {
+    if (!head || !head.next) return head;
+    var node = head;
+    head = reverseList(head.next);
+    node.next.next = node;
+    node.next = null;
+    return head;
+};
+```
+
 ### **Python3**
 
 ```python
