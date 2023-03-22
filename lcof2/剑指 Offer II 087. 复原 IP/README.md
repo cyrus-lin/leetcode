@@ -68,6 +68,43 @@ DFS。
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 剑指 Offer II 087. 复原 IP 
+ * 
+ * 回溯，其实就是暴力枚举 + 递归
+ * 
+ * @param {string} s
+ * @return {string[]}
+ */
+var restoreIpAddresses = function(s) {
+    if (!s || s.length == 0) return [];
+    const zero = 48, len = s.length;
+    var ret = new Array() /* 返回值 */, ip = new Array(4) /* ip 地址的四个部分 */;
+    var recursion = function(ipIdx, start) {
+
+        if (ipIdx == 4) {
+            if (start == len) {
+                ret.push(ip.join('.'));  // 填满 ip 的四个部分，同时用完字符串，才算满足条件
+            }
+            return;
+        }
+
+        for (let i = start, count = 0; i < len; i++) {
+            count = count * 10 + (s.codePointAt(i) - zero)
+            // ip 地址的每个部分 0 <= ip[idx] <= 255，且不能以 0 开头
+            if (count > 255 || (i > start && s.codePointAt(start) == zero)) break;
+            ip[ipIdx] = count;
+            recursion(ipIdx + 1, i + 1);
+        }
+    };
+    recursion(0, 0)
+    return ret;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
