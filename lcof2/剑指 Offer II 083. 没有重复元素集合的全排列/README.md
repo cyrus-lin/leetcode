@@ -51,6 +51,44 @@
 
 <!-- tabs:start -->
 
+### **Cyrus**
+
+```javascript
+/**
+ * 剑指 Offer II 083. 没有重复元素集合的全排列
+ * 
+ * 排列不是子数组，排列跟次序无关
+ * 举个例子 [0, 1, 2] 写出它的全排列，发现是个暴力枚举的过程，那么就用回溯
+ * 
+ * 回溯 = 用递归实现暴力枚举
+ * 
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+var permute = function(nums) {
+    if (!nums || nums.length == 0) return [];
+    var ret = new Array(), len = nums.length, ans = new Array(nums.length), selected = new Map();
+    var recursion = function(ansIdx) {
+        for (let i = 0; i < len; i++) {
+            if (selected.has(nums[i])) {
+                continue;
+            }
+            ans[ansIdx] = nums[i];
+            selected.set(nums[i], true);
+            
+            if (ansIdx == len - 1) {
+                ret.push(Array.from(ans));
+            } else {
+                recursion(ansIdx + 1)
+            }
+            selected.delete(nums[i]);
+        }
+    };
+    recursion(0);
+    return ret;
+};
+```
+
 ### **Python3**
 
 <!-- 这里可写当前语言的特殊实现逻辑 -->
